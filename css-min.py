@@ -48,7 +48,6 @@ def min(name):
                     wspc = 0
                     continue
             else:
-                " ".encode()
                 if wspc != 0:
                     try:
                         write(fdf, bytes((" "*wspc).encode()))
