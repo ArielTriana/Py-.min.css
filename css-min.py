@@ -83,7 +83,6 @@ if __name__ == "__main__":
             else:
                 r = min(name)
                 if re.match("^Done!*", r):
-                    print("as")
                     os.write(1, bytes(r.encode()))
                 else:
                     os.write(2, bytes(r.encode()))
