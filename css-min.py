@@ -1,5 +1,5 @@
 from sys import argv
-from os import open, write, close, O_RDONLY, O_CREAT, O_WRONLY
+from os import open, write, read, close, O_RDONLY, O_CREAT, O_WRONLY
 from re import match
 
 def fdprint(fd):
@@ -12,13 +12,14 @@ def help():
 
 def min(name):
     fd, fdf = 0, 0
+
     try:
         fd = open(name, O_RDONLY)
-    finally:
+    except:
         return f"Oops! Error! Opening file {name}\n"
     try:
         fdf = open(name[0:-4] + ".min.css", O_CREAT | O_WRONLY)
-    finally:
+    except:
         return f"Oops! Error! Creating file {name[0:-4] + '.min.css'}\n"
 
     wspc = 0
@@ -26,15 +27,15 @@ def min(name):
         buf = ""
         try:
             buf = read(fd, 1)
-        finally:
-            return f"Oops! Error! While reading file {name}\n"
+        except:
+           return f"Oops! Error! While reading file {name}\n"
 
         if not len(buf):
             break
         elif buf == b"\r" or buf == b"\n" or buf == b"\t":
             try:
                 write(fdf, b"")
-            finally:
+            except:
                 return f"Oops! Error! While writing file {name[0:-4] + '.min.css'}\n"
             wspc = 0
         else:
@@ -43,7 +44,7 @@ def min(name):
                 if 0 == wspc % 4:
                     try:
                         write(fdf, b"")
-                    finally:
+                    except:
                         return f"Oops! Error! While writing file {name[0:-4] + '.min.css'}\n"
                     wspc = 0
                     continue
@@ -51,17 +52,17 @@ def min(name):
                 if wspc != 0:
                     try:
                         write(fdf, bytes((" "*wspc).encode()))
-                    finally:
+                    except:
                         return f"Oops! Error! While writing file {name[0:-4] + '.min.css'}\n"
                     wspc = 0
                 try:
                     write(fdf, buf)
-                finally:
+                except:
                     return f"Oops! Error! While writing file {name[0:-4] + '.min.css'}\n"
     try:
         close(fd)
         close(fdf)
-    finally:
+    except:
         return f"Oops! Error! Closing files\n"
     return f"Done!\nFile Name: {name[0:-4] + '.min.css'}\n"
 
