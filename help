@@ -1,0 +1,9 @@
+------------------------------------------
+------- Help of minimize CSS file --------
+------------------------------------------
+
+Examples of minimize a CSS file:
+    Suppose that exist a CSS file at /home/user/ call ex1.css, to minimize this file:
+        python css-min.py -m=/home/user/ex1.css
+    If occurs without errors, the program creates a file in /home/user called ex1.min.css.
+    
